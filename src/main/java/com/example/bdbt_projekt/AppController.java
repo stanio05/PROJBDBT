@@ -2,11 +2,26 @@ package com.example.bdbt_projekt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
+
 @Controller
 public class AppController implements WebMvcConfigurer {
+    private final AudycjeDAO dao;
+
+    public AppController(AudycjeDAO dao) {
+        this.dao = dao;
+    }
+    @RequestMapping(value = {"/index","/"})
+    public String viewHomePage(Model model){
+        List<Audycje> listAudycje = dao.list();
+        model.addAttribute("listAudycje",listAudycje);
+        return "index";
+    }
     public void addViewControllers(ViewControllerRegistry reqistry) {
         reqistry.addViewController("/index").setViewName("index");
         reqistry.addViewController("/").setViewName("index");

@@ -39,6 +39,24 @@
     </div>
 
     <div class="position-absolute bottom-0 w-100 text-center pb-3 z-2 text-white-50 small">
+        <table class="table" >
+        <thead>
+        <tr>
+            <th>Nr (ID)</th>
+            <th>Nazwa (item name)</th>
+            <th>Ilość (quantity)</th>
+            <th>Kwota (Amount)</th>
+        </tr>
+        </thead>
+            <tbody>
+            <tr th:each="audycje : ${listAudycje}">
+                <td th:text="${audycje.id_audycji}">ID</td>
+                <td th:text="${audycje.tytul_audycji}">Item Name</td>
+                <td th:text="${audycje.kategoria}">Quantity</td>
+                <td th:text="${audycje.opis}">Amount</td>
+            </tr>
+            </tbody>
+        </table>
         &copy; 2024 Neon Radio Station
     </div>
 

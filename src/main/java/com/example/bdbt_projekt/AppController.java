@@ -11,20 +11,6 @@ import java.util.List;
 
 @Controller
 public class AppController implements WebMvcConfigurer {
-    private final AudycjeDAO dao;
-    private final  RadiostacjeDAO radiostacje_dao;
-    public AppController(AudycjeDAO dao, RadiostacjeDAO radiostacje_dao) {
-        this.dao = dao;
-        this.radiostacje_dao = radiostacje_dao;
-    }
-    @RequestMapping(value = {"/index","/"})
-    public String viewHomePage(Model model){
-        List<Audycje> listAudycje = dao.list();
-        List<Radiostacje> listRadiostacje = radiostacje_dao.list();
-        model.addAttribute("listAudycje",listAudycje);
-        model.addAttribute("listRadiostacje",listRadiostacje);
-        return "index";
-    }
 
     public void addViewControllers(ViewControllerRegistry reqistry) {
         reqistry.addViewController("/index").setViewName("index");

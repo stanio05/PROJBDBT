@@ -30,9 +30,12 @@ public class WebSecurityConfig {
                         .permitAll()
                 )
                 .logout((logout) -> logout
-                        .logoutSuccessUrl("/index")
+                        .logoutUrl("/logout") // Obsługuj domyślną ścieżkę /logout
+                        .logoutSuccessUrl("/index") // Przekierowanie na index po wylogowaniu
+                        .invalidateHttpSession(true) // Usunięcie sesji użytkownika
+                        .deleteCookies("JSESSIONID") // Usunięcie ciasteczek sesji
                         .permitAll()
-                );
+                    );
         return http.build();
     }
     @Bean

@@ -19,15 +19,22 @@ public class AudycjeDAO {
         return listAudycje;
     }
     public void save(Audycje audycje) {
-
+        String sql = "INSERT INTO AUDYCJE (tytul_audycji, opis, kategoria) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, audycje.getTytul_audycji(), audycje.getOpis(), audycje.getKategoria());
     }
-    public Audycje get(int Id_audcyji){
-        return null;
-    }
-    public void update(Audycje audycje){
 
+    public Audycje get(int idAudycji) {
+        String sql = "SELECT * FROM AUDYCJE WHERE id_audycji = ?";
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Audycje.class), idAudycji);
     }
-    public void delete(int Id_audycji){
 
+    public void update(Audycje audycje) {
+        String sql = "UPDATE AUDYCJE SET tytul_audycji = ?, opis = ?, kategoria = ? WHERE id_audycji = ?";
+        jdbcTemplate.update(sql, audycje.getTytul_audycji(), audycje.getOpis(), audycje.getKategoria(), audycje.getId_audycji());
+    }
+
+    public void delete(int idAudycji) {
+        String sql = "DELETE FROM AUDYCJE WHERE id_audycji = ?";
+        jdbcTemplate.update(sql, idAudycji);
     }
 }

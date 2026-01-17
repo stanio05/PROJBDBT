@@ -57,6 +57,9 @@
             </tr>
             </tbody>
         </table>
+        <tr th:each="radiostacje : ${listRadiostacje}">
+            <h1 th:text="${radiostacje.toString()}"></h1>
+        </tr>
         &copy; 2024 Neon Radio Station
     </div>
 

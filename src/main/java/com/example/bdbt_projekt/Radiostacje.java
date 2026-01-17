@@ -38,7 +38,7 @@ public class Radiostacje {
 
     @Override
     public String toString() {
-        return "Utwory{" +
+        return "Radiostacje{" +
                 "Id_stacji=" + Id_stacji +
                 ", Nazwa='" + Nazwa + '\'' +
                 ", Adres=" + Adres +

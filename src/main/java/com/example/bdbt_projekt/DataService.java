@@ -22,4 +22,7 @@ public class DataService {
     public List<Radiostacje> getRadiostacje() {
         return radiostacjeDAO.list();
     }
+    public void addAudycja(Audycje audycje) {
+        audycjeDAO.save(audycje);
+    }
 }

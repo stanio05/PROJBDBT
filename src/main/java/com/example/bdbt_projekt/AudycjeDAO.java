@@ -19,8 +19,17 @@ public class AudycjeDAO {
         return listAudycje;
     }
     public void save(Audycje audycje) {
-        String sql = "INSERT INTO AUDYCJE (tytul_audycji, opis, kategoria) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, audycje.getTytul_audycji(), audycje.getOpis(), audycje.getKategoria());
+        String sql =
+                "INSERT INTO \"AUDYCJE\" (\"Tytul_audycji\", \"Opis\", \"Kategoria\", \"Data_emisji\", \"Id_studia\") " + "VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(
+                sql,
+                audycje.getTytul_audycji(),
+                audycje.getOpis(),
+                audycje.getKategoria(),
+                audycje.getData_emisji(),
+                audycje.getId_studia()
+
+        );
     }
 
     public Audycje get(int idAudycji) {

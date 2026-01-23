@@ -24,6 +24,11 @@ public class AdminController {
         model.addAttribute("listRadiostacje", dataService.getRadiostacje());
         return "admin/manage_audycje";
     }
+    @GetMapping("/admin/audycje/edit")
+    public String editAudycjaForm(@RequestParam("id_audycji") int idAudycji, Model model) {
+        model.addAttribute("audycja", dataService.getAudycja(idAudycji));
+        return "admin/edit_audycje";
+    }
 
     // Widok dla zarządzania radiostacjami
     @RequestMapping("/admin/radiostacje")
@@ -65,6 +70,26 @@ public class AdminController {
         dataService.addAudycja(a);
         return "redirect:/admin/audycje";
     }
-}
+    @PostMapping("/admin/audycje/delete")
+    public String deleteAudycja(@RequestParam("id_audycji") int idAudycji) {
+        dataService.deleteAudycja(idAudycji);
+        return "redirect:/admin/audycje";
+    }
+    @PostMapping("/admin/audycje/update")
+    public String updateAudycja(
+            @RequestParam("id_audycji") int idAudycji,
+            @RequestParam("tytul_audycji") String tytul,
+            @RequestParam("opis") String opis,
+            @RequestParam("kategoria") String kategoria
+    ) {
+        Audycje a = new Audycje();
+        a.setId_audycji(idAudycji);
+        a.setTytul_audycji(tytul);
+        a.setOpis(opis);
+        a.setKategoria(kategoria);
 
-    // Możliwe inne en
+        dataService.updateAudycja(a);
+        return "redirect:/admin/audycje";
+    }
+
+}

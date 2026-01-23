@@ -33,17 +33,18 @@ public class AudycjeDAO {
     }
 
     public Audycje get(int idAudycji) {
-        String sql = "SELECT * FROM AUDYCJE WHERE id_audycji = ?";
+        String sql = "SELECT * FROM \"AUDYCJE\" WHERE \"Id_audycji\" = ?";
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Audycje.class), idAudycji);
     }
 
     public void update(Audycje audycje) {
-        String sql = "UPDATE AUDYCJE SET tytul_audycji = ?, opis = ?, kategoria = ? WHERE id_audycji = ?";
+        String sql = "UPDATE \"AUDYCJE\" SET \"Tytul_audycji\" = ?, \"Opis\" = ?, \"Kategoria\" = ? WHERE \"Id_audycji\" = ?";
         jdbcTemplate.update(sql, audycje.getTytul_audycji(), audycje.getOpis(), audycje.getKategoria(), audycje.getId_audycji());
     }
 
     public void delete(int idAudycji) {
-        String sql = "DELETE FROM AUDYCJE WHERE id_audycji = ?";
+        String sql = "DELETE FROM \"AUDYCJE\" WHERE \"Id_audycji\" = ?";
         jdbcTemplate.update(sql, idAudycji);
     }
+
 }

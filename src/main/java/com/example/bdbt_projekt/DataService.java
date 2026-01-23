@@ -22,7 +22,19 @@ public class DataService {
     public List<Radiostacje> getRadiostacje() {
         return radiostacjeDAO.list();
     }
+
     public void addAudycja(Audycje audycje) {
         audycjeDAO.save(audycje);
+    }
+
+    public void deleteAudycja(int idAudycji) {
+        audycjeDAO.delete(idAudycji);
+    }
+    public Audycje getAudycja(int idAudycji) {
+        return audycjeDAO.get(idAudycji);
+    }
+
+    public void updateAudycja(Audycje audycje) {
+        audycjeDAO.update(audycje);
     }
 }

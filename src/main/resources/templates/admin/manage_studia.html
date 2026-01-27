@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarządzaj Studiami - NeonWave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; font-family: sans-serif; color: white; }
+        .glass-card { background: rgba(255,255,255,.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,.10); border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,.50); }
+        .muted { color: rgba(255,255,255,.7); }
+        .glass-card .form-control, .glass-card .form-select { background: rgba(0,0,0,.20); border: 1px solid rgba(255,255,255,.10); color: white; }
+        .glass-card .form-control:focus, .glass-card .form-select:focus { background: rgba(0,0,0,.40); border-color: #0d6efd; color: white; box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); }
+        .table-glass { --bs-table-bg: transparent; --bs-table-striped-bg: rgba(255,255,255,.05); --bs-table-border-color: rgba(255,255,255,.10); color: white; }
+        .table-glass thead th { background-color: rgba(0,0,0,.25); border-color: rgba(255,255,255,.12); color: white; white-space: nowrap; }
+        .table-glass tbody td { border-color: rgba(255,255,255,.08); vertical-align: middle; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-door-open-fill text-info fs-3"></i>
+                <h1 class="h3 m-0 fw-bold">Zarządzaj studiami</h1>
+            </div>
+            <div class="muted mt-1">Studio przypisuje audycje do radiostacji (AUDYCJE → STUDIA → RADIOSTACJE).</div>
+        </div>
+
+        <a class="btn btn-outline-light" th:href="@{/admin_main}">
+            <i class="bi bi-arrow-left"></i> Wróć
+        </a>
+    </div>
+
+    <div class="glass-card p-3 p-md-4 mb-4">
+        <h3 class="h5 m-0 fw-bold mb-3">Lista studiów</h3>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-glass table-striped align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Numer pokoju</th>
+                    <th>Nazwa</th>
+                    <th>ID stacji</th>
+                    <th>Radiostacja</th>
+                    <th>Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:if="${listStudia == null || #lists.isEmpty(listStudia)}">
+                    <td colspan="6" class="text-center muted py-4">Brak studiów w bazie.</td>
+                </tr>
+
+                <tr th:each="s : ${listStudia}">
+                    <td th:text="${s.id_studia}">1</td>
+                    <td th:text="${s.numer_pokoju}">101</td>
+                    <td th:text="${s.nazwa != null ? s.nazwa : '-'}">-</td>
+                    <td th:text="${s.id_stacji}">1</td>
+                    <td th:text="${s.nazwa_radiostacji}">Radio</td>
+                    <td class="d-flex gap-2 flex-wrap">
+                        <a class="btn btn-sm btn-warning"
+                           th:href="@{/admin/studia/edit(id_studia=${s.id_studia})}">
+                            <i class="bi bi-pencil-square"></i> Edytuj
+                        </a>
+
+                        <form th:action="@{/admin/studia/delete}" method="post" class="m-0"
+                              onsubmit="return confirm('Na pewno usunąć studio? (Jeśli jest użyte w AUDYCJE, baza może nie pozwolić)');">
+                            <input type="hidden" name="id_studia" th:value="${s.id_studia}">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Usuń
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="glass-card p-3 p-md-4">
+        <h3 class="h5 m-0 fw-bold mb-3">Dodaj studio</h3>
+
+        <form th:action="@{/admin/studia/add}" method="post" class="row g-3">
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="numer_pokoju">Numer pokoju</label>
+                <input id="numer_pokoju" name="numer_pokoju" class="form-control form-control-lg" required>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="nazwa">Nazwa (opcjonalnie)</label>
+                <input id="nazwa" name="nazwa" class="form-control form-control-lg">
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="id_stacji">Radiostacja</label>
+                <select id="id_stacji" name="id_stacji" class="form-select form-select-lg" required>
+                    <option value="" disabled selected>Wybierz radiostację...</option>
+                    <option th:each="r : ${listRadiostacje}"
+                            th:value="${r.id_stacji}"
+                            th:text="${r.nazwa + ' — ' + r.adres_full}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                    <i class="bi bi-plus-circle"></i> Dodaj
+                </button>
+                <button type="reset" class="btn btn-outline-light btn-lg">Wyczyść</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

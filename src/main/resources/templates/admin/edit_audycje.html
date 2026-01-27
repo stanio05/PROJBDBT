@@ -28,14 +28,16 @@
     .muted { color: rgba(255,255,255,.7); }
 
     .glass-card .form-control,
-    .glass-card textarea.form-control {
+    .glass-card textarea.form-control,
+    .glass-card .form-select {
       background: rgba(0, 0, 0, 0.20);
       border: 1px solid rgba(255, 255, 255, 0.10);
       color: white;
     }
 
     .glass-card .form-control:focus,
-    .glass-card textarea.form-control:focus {
+    .glass-card textarea.form-control:focus,
+    .glass-card .form-select:focus {
       background: rgba(0, 0, 0, 0.40);
       border-color: #0d6efd;
       color: white;
@@ -94,13 +96,25 @@
       <div class="col-12 col-md-6">
         <label for="data_emisji" class="form-label">Data emisji</label>
         <input type="date" class="form-control form-control-lg" id="data_emisji" name="data_emisji"
-               th:value="${audycja.data_emisji != null ? #dates.format(audycja.data_emisji, 'yyyy-MM-dd') : ''}" required>
+               th:value="${audycja.data_emisji != null ? #dates.format(audycja.data_emisji, 'yyyy-MM-dd') : ''}"
+               required>
       </div>
 
       <div class="col-12 col-md-6">
-        <label for="id_studia" class="form-label">ID studia</label>
-        <input type="number" class="form-control form-control-lg" id="id_studia" name="id_studia" min="1"
-               th:value="${audycja.id_studia}" required>
+        <label for="id_studia" class="form-label">Studio</label>
+        <select id="id_studia" name="id_studia" class="form-select form-select-lg" required>
+          <option th:if="${listStudia == null || #lists.isEmpty(listStudia)}"
+                  value="" disabled selected>Brak studiów — dodaj studio w panelu admina</option>
+
+          <option th:each="s : ${listStudia}"
+                  th:value="${s.id_studia}"
+                  th:selected="${s.id_studia == audycja.id_studia}"
+                  th:text="${'ID ' + s.id_studia + ' — pokój ' + s.numer_pokoju + (s.nazwa != null ? ' • ' + s.nazwa : '')}">
+          </option>
+        </select>
+        <div class="form-text muted">
+          Audycja jest przypisana do radiostacji przez STUDIA.
+        </div>
       </div>
 
       <div class="col-12">

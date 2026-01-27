@@ -10,18 +10,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/index").permitAll()
-                        .requestMatchers("/static/**").permitAll()
-                        .requestMatchers("/webjars/**").permitAll()
-                        .requestMatchers("/admin_main").hasRole("ADMIN")
-                        .requestMatchers("/prezenter_main").hasRole("PREZENTER")
+                        // public
+                        .requestMatchers("/", "/index", "/login").permitAll()
+                        .requestMatchers("/static/**", "/webjars/**").permitAll()
+
+                        // role-based pages
+                        .requestMatchers("/admin_main", "/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user_main", "/user/**").hasRole("USER")
+
+                        // everything else requires login
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -30,32 +36,38 @@ public class WebSecurityConfig {
                         .permitAll()
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/logout") // Obsługuj domyślną ścieżkę /logout
-                        .logoutSuccessUrl("/index") // Przekierowanie na index po wylogowaniu
-                        .invalidateHttpSession(true) // Usunięcie sesji użytkownika
-                        .deleteCookies("JSESSIONID") // Usunięcie ciasteczek sesji
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/index")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
-                    );
+                );
+
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails prezenter1 = User.withUsername("prezenter1")
-                .password(passwordEncoder().encode("prezenter1"))
-                .roles("PREZENTER")
+        UserDetails user1 = User.withUsername("user1")
+                .password(passwordEncoder().encode("user1"))
+                .roles("USER")
                 .build();
-        UserDetails prezenter2 = User.withUsername("prezenter2")
-                .password(passwordEncoder().encode("prezenter2"))
-                .roles("PREZENTER")
+
+        UserDetails user2 = User.withUsername("user2")
+                .password(passwordEncoder().encode("user2"))
+                .roles("USER")
                 .build();
+
         UserDetails admin = User.withUsername("admin")
                 .password(passwordEncoder().encode("admin"))
                 .roles("ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(prezenter1, prezenter2, admin);
+
+        return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 }

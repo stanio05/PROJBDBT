@@ -100,7 +100,7 @@
                 <i class="bi bi-broadcast"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Radiostacje</h5>
-                    <p class="card-text">Zobacz radiostacje oraz audycje i utwory.</p>
+                    <p class="card-text">Zobacz radiostacje, audycje i utwory.</p>
                     <a th:href="@{/user/radiostacje}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 <i class="bi bi-heart-fill"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Zgłoś ulubiony utwór</h5>
-                    <p class="card-text">Dodaj swój ulubiony utwór do bazy UTWORY.</p>
+                    <p class="card-text">Dodaj swój ulubiony utwór do listy.</p>
                     <a th:href="@{/user/ulubiony_utwor}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -122,7 +122,6 @@
                 <i class="bi bi-box-arrow-right"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title text-danger">Wyloguj się</h5>
-                    <p class="card-text">Bezpiecznie zakończ bieżącą sesję.</p>
                     <form th:action="@{/logout}" method="post" class="m-0">
                         <button type="submit" class="btn btn-danger">Wyloguj</button>
                     </form>

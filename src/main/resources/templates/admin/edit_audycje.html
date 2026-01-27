@@ -104,7 +104,7 @@
         <label for="id_studia" class="form-label">Studio</label>
         <select id="id_studia" name="id_studia" class="form-select form-select-lg" required>
           <option th:if="${listStudia == null || #lists.isEmpty(listStudia)}"
-                  value="" disabled selected>Brak studiów — dodaj studio w panelu admina</option>
+                  value="" disabled selected>Brak — dodaj studio w panelu admina</option>
 
           <option th:each="s : ${listStudia}"
                   th:value="${s.id_studia}"
@@ -113,7 +113,7 @@
           </option>
         </select>
         <div class="form-text muted">
-          Audycja jest przypisana do radiostacji przez STUDIA.
+          Wybierz z listy.
         </div>
       </div>
 

@@ -95,7 +95,7 @@
 <div class="container py-5">
     <h1 class="header-title mb-2">Panel Administratora</h1>
     <p class="header-subtitle">
-        Zarządzaj danymi: radiostacje → studia → audycje → utwory → emisje.
+        Witamy w panelu administratora.
     </p>
 
     <div class="row g-4">
@@ -116,7 +116,7 @@
                 <i class="bi bi-broadcast"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Zarządzaj radiostacjami</h5>
-                    <p class="card-text">Dodaj, edytuj lub usuń radiostacje (z adresem).</p>
+                    <p class="card-text">Dodaj, edytuj lub usuń radiostacje.</p>
                     <a th:href="@{/admin/radiostacje}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                 <i class="bi bi-door-open-fill"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Zarządzaj studiami</h5>
-                    <p class="card-text">Przypisz studia do radiostacji (AUDYCJE → STUDIA → RADIOSTACJE).</p>
+                    <p class="card-text">Przypisz studia do radiostacji.</p>
                     <a th:href="@{/admin/studia}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                 <i class="bi bi-mic-fill"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Zarządzaj audycjami</h5>
-                    <p class="card-text">Dodaj audycję, edytuj i usuwaj rekordy (wybór studia).</p>
+                    <p class="card-text">Dodaj audycję, edytuj i usuwaj rekordy.</p>
                     <a th:href="@{/admin/audycje}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 <i class="bi bi-music-note-list"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title">Zarządzaj emisjami</h5>
-                    <p class="card-text">Przypisuj utwory do audycji (EMISJE).</p>
+                    <p class="card-text">Przypisuj utwory do audycji.</p>
                     <a th:href="@{/admin/emisje}" class="btn btn-primary">Przejdź</a>
                 </div>
             </div>
@@ -171,7 +171,6 @@
                 <i class="bi bi-box-arrow-right"></i>
                 <div class="card-body text-center">
                     <h5 class="card-title text-danger">Wyloguj się</h5>
-                    <p class="card-text">Bezpiecznie zakończ bieżącą sesję.</p>
                     <form th:action="@{/logout}" method="post" class="m-0">
                         <button type="submit" class="btn btn-danger">Wyloguj</button>
                     </form>

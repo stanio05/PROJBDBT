@@ -142,4 +142,7 @@ public class DataService {
     public List<UtworInAudycjaView> getUtworyForAudycja(int idAudycji) {
         return emisjeDAO.listUtworyForAudycja(idAudycji);
     }
+    public java.util.List<Audycje> getAudycjeForRadiostacja(int idStacji) {
+        return audycjeDAO.listForRadiostacja(idStacji);
+    }
 }

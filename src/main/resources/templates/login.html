@@ -79,6 +79,15 @@
                 </button>
             </div>
         </form>
+        <!-- komunikat o błędzie logowania -->
+        <div class="alert alert-danger" th:if="${param.error}">
+            Nieprawidłowy login lub hasło.
+        </div>
+
+        <!-- (opcjonalnie) komunikat po wylogowaniu -->
+        <div class="alert alert-success" th:if="${param.logout}">
+            Wylogowano pomyślnie.
+        </div>
 
         <div class="text-center mt-4">
             <a th:href="@{/index}" class="text-white-50 text-decoration-none small">

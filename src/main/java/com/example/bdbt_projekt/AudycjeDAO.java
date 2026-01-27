@@ -72,5 +72,20 @@ public class AudycjeDAO {
         String sql = "DELETE FROM \"AUDYCJE\" WHERE \"Id_audycji\" = ?";
         jdbcTemplate.update(sql, idAudycji);
     }
+    public List<Audycje> listForRadiostacja(int idStacji) {
+        String sql =
+                "SELECT a.\"Id_audycji\" AS id_audycji, " +
+                        "       a.\"Tytul_audycji\" AS tytul_audycji, " +
+                        "       a.\"Opis\" AS opis, " +
+                        "       a.\"Kategoria\" AS kategoria, " +
+                        "       a.\"Id_studia\" AS id_studia, " +
+                        "       a.\"Data_emisji\" AS data_emisji " +
+                        "FROM \"AUDYCJE\" a " +
+                        "JOIN \"STUDIA\" s ON s.\"Id_studia\" = a.\"Id_studia\" " +
+                        "WHERE s.\"Id_stacji\" = ? " +
+                        "ORDER BY a.\"Data_emisji\" DESC, a.\"Id_audycji\" DESC";
+
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Audycje.class), idStacji);
+    }
 
 }

@@ -31,10 +31,12 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/perspectives", true)
-                        .permitAll()
-                )
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/perspectives", true)
+                                .failureUrl("/login?error")
+                                .permitAll()
+                        )
+
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/index")

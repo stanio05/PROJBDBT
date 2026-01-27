@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Audycje radiostacji - NeonWave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg,#0f0c29,#302b63,#24243e); min-height: 100vh; font-family:sans-serif; color:white; }
+        .glass-card { background: rgba(255,255,255,.05); backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,.10); border-radius:15px; box-shadow:0 15px 35px rgba(0,0,0,.50); }
+        .muted { color: rgba(255,255,255,.7); }
+        .chip { display:inline-block; padding:.20rem .55rem; border-radius:999px; border:1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.20); color: rgba(255,255,255,.9); font-size:.85rem; white-space:nowrap; }
+        a { color: inherit; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div>
+            <h1 class="h3 fw-bold m-0" th:text="${radiostacja.nazwa}">Radiostacja</h1>
+            <div class="muted mt-1" th:text="${radiostacja.adres_full}">Adres</div>
+        </div>
+        <a class="btn btn-outline-light" th:href="@{/user/radiostacje}">← Radiostacje</a>
+    </div>
+
+    <div class="glass-card p-3 p-md-4">
+        <h2 class="h5 fw-bold mb-3">Audycje</h2>
+
+        <div th:if="${listAudycje == null || #lists.isEmpty(listAudycje)}" class="muted">
+            Brak audycji przypisanych do tej radiostacji.
+        </div>
+
+        <div class="list-group" th:if="${listAudycje != null && !#lists.isEmpty(listAudycje)}">
+            <a class="list-group-item list-group-item-action"
+               style="background: rgba(0,0,0,.20); border-color: rgba(255,255,255,.10); color:white;"
+               th:each="a : ${listAudycje}"
+               th:href="@{/user/audycje/{id}(id=${a.id_audycji})}">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                    <div>
+                        <div class="fw-bold" th:text="${a.tytul_audycji}">Tytuł</div>
+                        <div class="muted small mt-1">
+                            <span class="chip" th:text="${a.kategoria}">Kategoria</span>
+                            <span class="chip" th:text="${a.data_emisji != null ? #dates.format(a.data_emisji, 'dd/MM/yyyy') : ''}">Data</span>
+                        </div>
+                    </div>
+                    <div class="muted small">Szczegóły →</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

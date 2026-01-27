@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Radiostacje - NeonWave</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg,#0f0c29,#302b63,#24243e); min-height: 100vh; font-family:sans-serif; color:white; }
+    .glass-card { background: rgba(255,255,255,.05); backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,.10); border-radius:15px; box-shadow:0 15px 35px rgba(0,0,0,.50); }
+    .muted { color: rgba(255,255,255,.7); }
+  </style>
+</head>
+<body>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+      <h1 class="h3 fw-bold m-0">Radiostacje</h1>
+      <div class="muted mt-1">Wybierz radiostację, aby zobaczyć audycje.</div>
+    </div>
+    <a class="btn btn-outline-light" th:href="@{/perspectives}">Wróć</a>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-4" th:each="r : ${listRadiostacje}">
+      <div class="glass-card p-3 h-100">
+        <div class="fw-bold fs-5" th:text="${r.nazwa}">Radio</div>
+        <div class="muted mt-1" th:text="${r.adres_full}">Adres</div>
+
+        <div class="mt-3">
+          <a class="btn btn-primary w-100"
+             th:href="@{/user/radiostacje/{id}/audycje(id=${r.id_stacji})}">
+            Zobacz audycje
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Szczegóły audycji - NeonWave</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: linear-gradient(135deg,#0f0c29,#302b63,#24243e); min-height: 100vh; font-family:sans-serif; color:white; }
+    .glass-card { background: rgba(255,255,255,.05); backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,.10); border-radius:15px; box-shadow:0 15px 35px rgba(0,0,0,.50); }
+    .muted { color: rgba(255,255,255,.7); }
+    .chip { display:inline-block; padding:.20rem .55rem; border-radius:999px; border:1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.20); color: rgba(255,255,255,.9); font-size:.85rem; white-space:nowrap; }
+  </style>
+</head>
+<body>
+<div class="container py-5">
+
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+      <h1 class="h3 fw-bold m-0" th:text="${audycja.tytul_audycji}">Audycja</h1>
+      <div class="muted mt-1">
+        <span class="chip" th:text="${audycja.kategoria}">Kategoria</span>
+        <span class="chip" th:text="${audycja.data_emisji != null ? #dates.format(audycja.data_emisji, 'dd/MM/yyyy') : ''}">Data</span>
+      </div>
+    </div>
+    <a class="btn btn-outline-light" href="javascript:history.back()">← Wróć</a>
+  </div>
+
+  <div class="glass-card p-3 p-md-4 mb-4">
+    <h2 class="h5 fw-bold mb-2">Opis</h2>
+    <div class="muted" style="white-space: pre-wrap;" th:text="${audycja.opis}">Opis...</div>
+  </div>
+
+  <div class="glass-card p-3 p-md-4">
+    <h2 class="h5 fw-bold mb-3">Utwory w audycji</h2>
+
+    <div th:if="${utwory == null || #lists.isEmpty(utwory)}" class="muted">
+      Brak utworów przypisanych do tej audycji.
+    </div>
+
+    <ul class="list-group" th:if="${utwory != null && !#lists.isEmpty(utwory)}">
+      <li class="list-group-item"
+          style="background: rgba(0,0,0,.20); border-color: rgba(255,255,255,.10); color:white;"
+          th:each="u : ${utwory}">
+        <span class="chip" th:text="${u.id_utworu}">1</span>
+        <span class="ms-2" th:text="${u.tytul}">Tytuł</span>
+      </li>
+    </ul>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

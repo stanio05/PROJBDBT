@@ -2,12 +2,9 @@ package com.example.bdbt_projekt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 @Controller
 public class AppController implements WebMvcConfigurer {
@@ -18,7 +15,7 @@ public class AppController implements WebMvcConfigurer {
         reqistry.addViewController("/login").setViewName("login");
         reqistry.addViewController("/perspectives").setViewName("perspectives");
         reqistry.addViewController("/admin_main").setViewName("admin/admin_main");
-        reqistry.addViewController("/prezenter_main").setViewName("prezenter/prezenter_main");
+        reqistry.addViewController("/user_main").setViewName("user/user_main");
 
     }
     @Controller
@@ -28,8 +25,8 @@ public class AppController implements WebMvcConfigurer {
             if (request.isUserInRole("ADMIN")) {
                 return "redirect:/admin_main";
             }
-            else if(request.isUserInRole("PREZENTER")) {
-                return "redirect:/prezenter_main";
+            else if(request.isUserInRole("USER")) {
+                return "redirect:/user_main";
             }
             else {
                 return "redirect:/index";
